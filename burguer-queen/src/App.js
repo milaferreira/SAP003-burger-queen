@@ -7,15 +7,16 @@ import {
 } from "react-router-dom";
 import Kitchen from './Pages/Kitchen';
 import Restaurant from './Pages/Restaurant';
-//import Nav from './Componentes/Nav';
+import Nav from './Componentes/Nav';
 
 function App() {
   return (
         <Router>
+          <Nav/>
       <div>
         <Switch>
-          <Route path="/Salao" component= {Restaurant} />
-          <Route path="/Cozinha" component={Kitchen} />
+          <Route path="/Salao" component={ Restaurant } />
+          <Route path="/Cozinha" component={ Kitchen } />
         </Switch>
       </div>
         </Router>
