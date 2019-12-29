@@ -1,6 +1,7 @@
 import React from 'react';
 import {   BrowserRouter as Router,
 Link     } from "react-router-dom";
+import Button from '../Componentes/Button'
 
 function Nav(){
     return (
@@ -9,10 +10,10 @@ function Nav(){
             <nav>
               <ul>
                 <li>
-                  <Link to="/Salao">Salão</Link>
+                <Button title={<Link to="/restaurant">Restaurante</Link>} />
                 </li>
                 <li>
-                  <Link to="/Cozinha">Cozinha</Link>
+                <Button title={<Link to="/cozinha">Cozinha</Link>} />
                 </li>
               </ul>
             </nav>

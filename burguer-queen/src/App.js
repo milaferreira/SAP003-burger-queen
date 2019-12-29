@@ -1,25 +1,26 @@
 import React from 'react';
 import './App.css';
 import {
-  BrowserRouter as Router,
-  Switch,
+  BrowserRouter,
   Route,
 } from "react-router-dom";
 import Kitchen from './Pages/Kitchen';
 import Restaurant from './Pages/Restaurant';
 import Nav from './Componentes/Nav';
 
+
+
 function App() {
   return (
-        <Router>
+      <BrowserRouter className="App">
           <Nav/>
       <div>
-        <Switch>
-          <Route path="/Salao" component={ Restaurant } />
-          <Route path="/Cozinha" component={ Kitchen } />
-        </Switch>
+
+          <Route path="/restaurante" component={Restaurant} />
+          <Route path="/cozinha" component={Kitchen} />
+
       </div>
-        </Router>
+      </BrowserRouter>
   );  
 }
 
