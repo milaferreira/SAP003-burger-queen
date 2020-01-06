@@ -10,8 +10,8 @@ const Modal = ({
       return null;
     }
     return (
-      <section className={css(styles.modal)}>
-        <article className={css(styles.box)}>
+      <section>
+        <article>
           <p>{text}</p>
           <Button handleClick={handleClick} name={nameBtn} />
         </article>

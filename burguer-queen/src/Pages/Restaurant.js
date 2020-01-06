@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from 'react';
 //import { Link } from "react-router-dom";
-import db from '../Utils/config'
+import firebase from '../Utils/config'
 import MenuCard from '../Componentes/MenuCard'
 //import Input from '../Componentes/Input'
 import Button from '../Componentes/Button'
-import Modal from '../Componentes/Modal'
+//import Modal from '../Componentes/Modal'
+import Nav from '../Componentes/Nav';
 
 
 const Restaurant = () => {
 
       const [menu, setMenu] = useState([]);
-      const [client, setClient] = useState('');
+      /*const [client, setClient] = useState('');
       const [table, setTable] = useState(0);
-      const [show, setShow] = useState('false');
-      const [order, setOrder] = useState([]); 
-      const [filteredMenu, setFilteredMenu] = useState([]);     
+      const [show, setShow] = useState(false);
+      const [order, setOrder] = useState([]); */
+      const [ setFilteredMenu] = useState([]);     
 
       useEffect(() => {
-        db.collection('menu').get()
+        firebase.firestore().collection('menu').get()
           .then((snapshot) => {
             snapshot.forEach((doc) => setMenu((current) => [...current, doc.data()]));
           });
       }, []);
     
-      function infoClient() {
+      /*function infoClient() {
         const date = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`;
         const time = `${new Date().getHours()}h:${new Date().getMinutes()}m:${new Date().getSeconds()}s`;
         if (client === '' && table === '') {
-          setShow('true');
+          setShow(true);
         } else {
-          db.collection('orders').add({
+          firebase.firestore().collection('orders').add({
             date,
             time,
             clock: new Date().getTime(),
@@ -44,7 +45,7 @@ const Restaurant = () => {
             setOrder([]),
           );
         }
-      }
+      }*/
     
       const filterFood = (typeMenu) => {  
         if (typeMenu === 'breakfast'){ 
@@ -62,17 +63,18 @@ const Restaurant = () => {
     return(
 
       <div>
-
-
-        {menu.map(menuItem =>
-          <MenuCard name={menuItem.name} price={menuItem.price} handleClick={() => console.log(menuItem)}/>)}
-          <Button tittle={"Breakfast"} handleClick={() => filterFood('breakfast')}/>
-          <Button tittle={"AllDay"} handleClick={() => filterFood('AllDay')} />
-          <Button tittle={"Salvar"} handleClick={() => infoClient()} />
-          <Modal show={show} handleClick={() => setShow('false')} text="Preencha todos os campos" nameBtn="Fechar" />
-
+      <Nav/>
+      <Button title={"Breakfast"} handleClick={() => filterFood('breakfast')}/>
+      <Button title={"AllDay"} handleClick={() => filterFood('AllDay')} />
+          
       </div>     
-    )
+       //{menu.map((menuItem, index) =>
+         //<MenuCard key={index} name={menuItem.name}   price={menuItem.price} handleClick={() => console.log(menuItem)}/>
+       //)}
+       // <Button title={"Salvar"} handleClick={() => infoClient()} />
+           
+       //<Modal show={show} handleClick={() => setShow('false')} text="Preencha todos os campos" nameBtn="Fechar" />
+           )
 }
 
 export default Restaurant;
