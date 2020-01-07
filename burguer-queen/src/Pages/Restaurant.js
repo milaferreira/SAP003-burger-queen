@@ -13,8 +13,8 @@ const Restaurant = () => {
       const [menu, setMenu] = useState([]);
       /*const [client, setClient] = useState('');
       const [table, setTable] = useState(0);
-      const [show, setShow] = useState(false);
-      const [order, setOrder] = useState([]); */
+      const [show, setShow] = useState(false);*/
+      const [order, setOrder] = useState([]); 
       const [ setFilteredMenu] = useState([]);     
 
       useEffect(() => {
@@ -46,6 +46,17 @@ const Restaurant = () => {
           );
         }
       }*/
+
+      const deleteProduct = (product) => {
+        const products = order.findIndex(item => item.name === product.name);
+        const removeItem = order.filter(item => item.name !== product.name);
+        if (product.quantity === 1) {
+          setOrder([...removeItem]);
+        } else {
+          order[products].quantity += -1;
+          setOrder([...order]);
+        }
+      }
     
       const filterFood = (typeMenu) => {  
         if (typeMenu === 'breakfast'){ 
@@ -56,7 +67,7 @@ const Restaurant = () => {
         else if (typeMenu === 'AllDay') {
           const filteredMenu = menu.filter(element => element.breakfast === false)
           setFilteredMenu(filteredMenu);
-          console.log(filteredMenu)
+          //console.log(filteredMenu)
         }
       }
       
@@ -67,9 +78,12 @@ const Restaurant = () => {
       <Button title={"Breakfast"} handleClick={() => filterFood('breakfast')}/>
       <Button title={"AllDay"} handleClick={() => filterFood('AllDay')} />
           
+      {order.map((product, item) => <Button key={item.name} 
+      quantity={product.quantity} name={product.name} 
+      type={product.type ? product.type : ""} onClick={deleteProduct}/>)}
       </div>     
        //{menu.map((menuItem, index) =>
-         //<MenuCard key={index} name={menuItem.name}   price={menuItem.price} handleClick={() => console.log(menuItem)}/>
+       //<MenuCard key={index} name={menuItem.name}   price={menuItem.price} handleClick={() => console.log(menuItem)}/>
        //)}
        // <Button title={"Salvar"} handleClick={() => infoClient()} />
            
