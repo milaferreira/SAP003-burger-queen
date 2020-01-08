@@ -1,5 +1,5 @@
 {
-  "name": "burguer-queen",
+  "name": "bq",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +9,7 @@
     "firebase": "^7.6.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0"
   },
   "scripts": {
@@ -31,5 +32,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "* [1. Preâmbulo](#1-preâmbulo)\r * [2. Resumo do projeto](#2-resumo-do-projeto)\r * [3. Objetivos de aprendizagem](#3-objetivos-de-aprendizagem)\r * [4. Considerações gerais](#4-considerações-gerais)\r * [5. Critérios de aceitação mínimos do\r   projeto](#5-critérios-de-aceitação-mínimos-do-projeto)\r * [6. Hacker Edition](#6-hacker-edition)\r * [7. Dicas e leituras complementares](#7-dicas-e-leituras-complementares)",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }

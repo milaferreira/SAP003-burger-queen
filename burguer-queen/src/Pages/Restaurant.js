@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import firebase from '../Utils/config'
 import MenuCard from '../Componentes/MenuCard'
-//import Input from '../Componentes/Input'
 import Button from '../Componentes/Button'
-import Modal from '../Componentes/Modal'
+// import Modal from '../Componentes/Modal'
 import Nav from '../Componentes/Nav';
+import Orders from '../Componentes/Orders'
 
 
 const Restaurant = () => {
@@ -12,7 +12,7 @@ const Restaurant = () => {
       const [menu, setMenu] = useState([]);
       const [client, setClient] = useState('');
       const [table, setTable] = useState(0);
-      const [show, setShow] = useState(false);
+      const [setShow] = useState(false);
       const [order, setOrder] = useState([]); 
       const [filteredMenu, setFilteredMenu] = useState([]);     
 
@@ -22,7 +22,24 @@ const Restaurant = () => {
             snapshot.forEach((doc) => setMenu((current) => [...current, doc.data()]));
           });
       }, []);
-    
+
+      function saveOrder(menuItem){
+        console.log(menuItem)
+        // order.map()
+        setOrder( [...order, menuItem] )
+        // verificar se existe o item e adicionar no mesmo
+        //entrar no array e verificar o nome de cada item e comparar
+        // com o que esta sendo clicado
+      }
+
+
+
+      useEffect(() => {
+        console.log(order);
+
+    }, [order])
+
+
       function infoClient() {
         const date = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`;
         const time = `${new Date().getHours()}h:${new Date().getMinutes()}m:${new Date().getSeconds()}s`;
@@ -64,7 +81,7 @@ const Restaurant = () => {
         }
         else if (typeMenu === 'AllDay') {
           const filteredMenu = menu.filter(element => element.breakfast === false)
-          setFilteredMenu(filteredMenu);
+          setFilteredMenu(filteredMenu);            
         }
       }
       
@@ -76,18 +93,19 @@ const Restaurant = () => {
       <Button title={"AllDay"} handleClick={() => filterFood('AllDay')} />
           
       {filteredMenu.map((menuItem, index) =>
-      <MenuCard key={index} name={menuItem.name}   
-      price={menuItem.price} handleClick={() => console.log(menuItem)}/>
+      <MenuCard key={index+menuItem.name} name={menuItem.name}   
+      handleClick={() => saveOrder(menuItem)}
+      price={menuItem.price} />
       )}
 
-      <Button title={"Salvar"} handleClick={() => infoClient()} />
+      {order.map((orderItem, index) => {
+        return(<Orders key = {index} name = {orderItem.name} price = {orderItem.price} 
+        />)
+      })}
+      {/* <Button title={"Salvar"} handleClick={() => infoClient()} /> */}
 
-      <Modal show={show} handleClick={() => setShow('false')} 
-      text="Preencha todos os campos" nameBtn="Fechar" />
-
-      {order.map((product, item) => <Button key={item.name} 
-      quantity={product.quantity} name={product.name} 
-      type={product.type ? product.type : ""} onClick={deleteProduct}/>)}
+      {/* <Modal show={show} handleClick={() => setShow('false')} 
+      text="Preencha todos os campos" nameBtn="Fechar" /> */}
 
       </div>     
            
