@@ -27,14 +27,18 @@ const Restaurant = () => {
           });
       }, []);
 
+      function addItem(menuItem){
+        menuItem.contador++;
+        setOrder([...order])  
+      }
+
       function saveOrder(menuItem){
         const index = order.findIndex(element => element.name === menuItem.name)
         if(index === -1) {
             menuItem.contador = 1;
             setOrder([...order, menuItem])
         } else {
-            menuItem.contador += 1;
-            setOrder([...order])             
+          addItem(menuItem);        
            }            
           
       }
@@ -50,21 +54,21 @@ const Restaurant = () => {
         }
       }
 
-      function deleteAddProduct(menuItem) {
-        const products = order.findIndex(element => element.name === menuItem.name);
-        const removeItem = order.splice(element => element.name !== menuItem.name);
-        if (menuItem.contador === 1) {
-          setOrder([...removeItem]);
-        } else {
-          order[products].contador += -1;
+      function deleteProduct(menuItem) {
+        const products = order.findIndex(element => element.name === menuItem.name);        
+        if (order[products].contador > 1) {
+          order[products].contador--;
+          setOrder([...order])  
+        } else{
+          order.splice(products, 1);
           setOrder([...order]);
         }
       }
       
-      useEffect(() => {
-        console.log(order);
+      // useEffect(() => {
+      //   console.log(order);
         
-      }, [order])
+      // }, [order])
       
        const verifyOptions = (menuItem) => {
          if (menuItem.options.length > 1 ) {
@@ -143,11 +147,16 @@ const Restaurant = () => {
 
       {order.map((orderItem, index) => {
         return(
+          <div key = {index}>
         <Orders key = {index}  
-        title = {'deletar'} quantidade = {orderItem.contador}
+        // title = {'deletar'} 
+        quantidade = {orderItem.contador}
         name = {orderItem.name} price = {orderItem.price} 
-        handleClick = {() => deleteAddProduct(orderItem)}
-        />)
+        />
+        <Button title={"-"} handleClick = {() => deleteProduct(orderItem, -1)}/>
+        <Button title={"+"} handleClick = {() => addItem(orderItem, 1)}/>
+        </div>
+        )
       })}
       {/* <Button title={"Salvar"} handleClick={() => infoClient()} /> */}
 
