@@ -10,9 +10,9 @@ import Orders from '../Componentes/Orders'
 const Restaurant = () => {
 
       const [menu, setMenu] = useState([]);
-      const [client, setClient] = useState('');
-      const [table, setTable] = useState(0);
-      const [setShow] = useState(false);
+      // const [client, setClient] = useState('');
+      // const [table, setTable] = useState(0);
+      // const [setShow] = useState(false);
       const [order, setOrder] = useState([]); 
       const [filteredMenu, setFilteredMenu] = useState([]);     
 
@@ -24,15 +24,17 @@ const Restaurant = () => {
       }, []);
 
       function saveOrder(menuItem){
-        console.log(menuItem)
-        // order.map()
-        setOrder( [...order, menuItem] )
-        // verificar se existe o item e adicionar no mesmo
-        //entrar no array e verificar o nome de cada item e comparar
-        // com o que esta sendo clicado
+        const index = order.findIndex(element => element.name === menuItem.name)
+        if(index === -1) {
+            menuItem.contador = 1;
+            setOrder([...order, menuItem])
+        } else {
+            menuItem.contador += 1;
+            setOrder([...order])             
+           }   
+           setTotal(+(total + item.price));          
+          
       }
-
-
 
       useEffect(() => {
         console.log(order);
@@ -40,39 +42,39 @@ const Restaurant = () => {
     }, [order])
 
 
-      function infoClient() {
-        const date = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`;
-        const time = `${new Date().getHours()}h:${new Date().getMinutes()}m:${new Date().getSeconds()}s`;
-        if (client === '' && table === '') {
-          setShow(true);
-        } else {
-          firebase.firestore().collection('orders').add({
-            date,
-            time,
-            clock: new Date().getTime(),
-            leadTime: '',
-            client,
-            table,
-            order,
-            status: 'em preparação',
-          }).then(
-            setClient(''),
-            setTable(''),
-            setOrder([]),
-          );
-        }
-      }
+      // function infoClient() {
+      //   const date = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`;
+      //   const time = `${new Date().getHours()}h:${new Date().getMinutes()}m:${new Date().getSeconds()}s`;
+      //   if (client === '' && table === '') {
+      //     setShow(true);
+      //   } else {
+      //     firebase.firestore().collection('orders').add({
+      //       date,
+      //       time,
+      //       clock: new Date().getTime(),
+      //       leadTime: '',
+      //       client,
+      //       table,
+      //       order,
+      //       status: 'em preparação',
+      //     }).then(
+      //       setClient(''),
+      //       setTable(''),
+      //       setOrder([]),
+      //     );
+      //   }
+      // }
 
-      const deleteProduct = (product) => {
-        const products = order.findIndex(item => item.name === product.name);
-        const removeItem = order.filter(item => item.name !== product.name);
-        if (product.quantity === 1) {
-          setOrder([...removeItem]);
-        } else {
-          order[products].quantity += -1;
-          setOrder([...order]);
-        }
-      }
+      // function deleteProduct(product) {
+      //   const products = order.findIndex(item => item.name === product.name);
+      //   const removeItem = order.filter(item => item.name !== product.name);
+      //   if (product.quantity === 1) {
+      //     setOrder([...removeItem]);
+      //   } else {
+      //     order[products].quantity += -1;
+      //     setOrder([...order]);
+      //   }
+      // }
     
       const filterFood = (typeMenu) => {  
         if (typeMenu === 'breakfast'){ 
