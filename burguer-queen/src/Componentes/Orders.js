@@ -8,6 +8,7 @@ function Orders(props){
         <MenuCard name = {props.name} price = {props.price} />
         <div>
             {props.quantidade}
+
         </div>
     </div>
     )}

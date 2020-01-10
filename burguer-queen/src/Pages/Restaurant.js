@@ -2,47 +2,51 @@ import React, { useEffect, useState } from 'react';
 import firebase from '../Utils/config'
 import MenuCard from '../Componentes/MenuCard'
 import Button from '../Componentes/Button'
-// import Modal from '../Componentes/Modal'
+import Input from '../Componentes/Input'
 import Nav from '../Componentes/Nav';
 import Orders from '../Componentes/Orders'
 
-
 const Restaurant = () => {
-
-      const [menu, setMenu] = useState([]);
-      // const [client, setClient] = useState('');
-      // const [table, setTable] = useState(0);
-      // const [setShow] = useState(false);
-      const [order, setOrder] = useState([]);
-      const [options, setOptions] = useState("")
-      const [modal, setModal] = useState({status: false})
-      const [filteredMenu, setFilteredMenu] = useState([]);
-      const [extras, setExtras] = useState("");
-
-
-      useEffect(() => {
-        firebase.firestore().collection('menu').get()
-          .then((snapshot) => {
-            snapshot.forEach((doc) => setMenu((current) => [...current, doc.data()]));
-          });
-      }, []);
-
-      function addItem(menuItem){
-        menuItem.contador++;
-        setOrder([...order])  
-      }
-
-      function saveOrder(menuItem){
-        const index = order.findIndex(element => element.name === menuItem.name)
-        if(index === -1) {
-            menuItem.contador = 1;
-            setOrder([...order, menuItem])
-        } else {
+  
+  const [menu, setMenu] = useState([]);
+  const [client, setClient] = useState('');
+  const [table, setTable] = useState('');
+  const [setShow] = useState(false);
+  const [order, setOrder] = useState([]);
+  const [options, setOptions] = useState("")
+  const [modal, setModal] = useState({status: false})
+  const [filteredMenu, setFilteredMenu] = useState([]);
+  const [extras, setExtras] = useState("");
+  
+  
+  useEffect(() => {
+    firebase.firestore().collection('menu').get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => setMenu((current) => [...current, doc.data()]));
+    });
+  }, []);
+  
+  
+  
+  function saveOrder(menuItem){
+    const index = order.findIndex(element => element.name === menuItem.name)
+    if(index === -1) {
+      menuItem.contador = 1;
+      setOrder([...order, menuItem])
+    } else {
           addItem(menuItem);        
-           }            
+        }; 
           
+  }
+      
+      const verifyOptions = (menuItem) => {
+        if (menuItem.options.length > 1 ) {
+          setModal({status: true, item: menuItem});
+        }  else {
+          saveOrder(menuItem)
+        };
       }
-
+      
       function filterFood(typeMenu){  
         if (typeMenu === 'breakfast'){ 
           const filteredMenu =  menu.filter(element => element.breakfast === true)
@@ -51,10 +55,22 @@ const Restaurant = () => {
         else if (typeMenu === 'AllDay') {
           const filteredMenu = menu.filter(element => element.breakfast === false)
           setFilteredMenu(filteredMenu);            
-        }
+        };
       }
-
-      function deleteProduct(menuItem) {
+      
+      function addItem(menuItem){
+        menuItem.contador++;
+        setOrder([...order])  
+      };
+      
+      const addOptionsExtras = () => {
+        const updatedItem = {...modal.item, name: `${modal.item.name}
+        ${options} ${extras}`}
+        saveOrder(updatedItem)
+        setModal({status: false})
+      };
+      
+      function decreaseItem(menuItem) {
         const products = order.findIndex(element => element.name === menuItem.name);        
         if (order[products].contador > 1) {
           order[products].contador--;
@@ -62,57 +78,50 @@ const Restaurant = () => {
         } else{
           order.splice(products, 1);
           setOrder([...order]);
-        }
+        };
       }
       
-      // useEffect(() => {
-      //   console.log(order);
+      function deleteItem(menuItem){
+        const deleteAllItem = (order.indexOf(menuItem));
+         order.splice(deleteAllItem, 1);
+         setOrder([...order]);
         
-      // }, [order])
+      };
       
-       const verifyOptions = (menuItem) => {
-         if (menuItem.options.length > 1 ) {
-             setModal({status: true, item: menuItem});
-         }  else {
-           saveOrder(menuItem)
-          }
-        }
+      const total = order.reduce((acc, item) => acc + (item.contador * item.price), 0);
 
-        const addOptionsExtras = () => {
-          const updatedItem = {...modal.item, name: `${modal.item.name}
-          ${options} ${extras}`}
-          saveOrder(updatedItem)
-          setModal({status: false})
-        }
-
-      // function infoClient() {
-      //   const date = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`;
-      //   const time = `${new Date().getHours()}h:${new Date().getMinutes()}m:${new Date().getSeconds()}s`;
-      //   if (client === '' && table === '') {
-      //     setShow(true);
-      //   } else {
-      //     firebase.firestore().collection('orders').add({
-      //       date,
-      //       time,
-      //       clock: new Date().getTime(),
-      //       leadTime: '',
-      //       client,
-      //       table,
-      //       order,
-      //       status: 'em preparação',
-      //     }).then(
-      //       setClient(''),
-      //       setTable(''),
-      //       setOrder([]),
-      //     );
-      //   }
-      // }
-
-    
-      
-    return(
-
-      <div>
+      // useEffect(() => {
+        //   console.log(order);
+        
+        // }, [order])
+        
+        function infoClient() {
+            const date = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`;
+            const time = `${new Date().getHours()}h:${new Date().getMinutes()}m:${new Date().getSeconds()}s`;
+            if (client === '' && table === '') {
+                setShow(true);
+              } else {
+                  firebase.firestore().collection('orders').add({
+                      date,
+                      time,
+                      clock: new Date().getTime(),
+                      leadTime: '',
+                      client,
+                      table,
+                      order,
+                      status: 'em preparação',
+                    }).then(
+                        setClient(''),
+                        setTable(''),
+                        setOrder([]),
+                      );
+                    }
+                  }
+                  
+                  
+                  return(
+                    
+                    <div>
       <Nav/>
       <Button title={"Breakfast"} handleClick={() => filterFood('breakfast')}/>
       <Button title={"AllDay"} handleClick={() => filterFood('AllDay')} />
@@ -153,19 +162,24 @@ const Restaurant = () => {
         quantidade = {orderItem.contador}
         name = {orderItem.name} price = {orderItem.price} 
         />
-        <Button title={"-"} handleClick = {() => deleteProduct(orderItem, -1)}/>
+        <Button title={"-"} handleClick = {() => decreaseItem(orderItem, -1)}/>
         <Button title={"+"} handleClick = {() => addItem(orderItem, 1)}/>
+
+        <Button title={"Excluir Item"} handleClick = {() => deleteItem()}/>
         </div>
         )
       })}
-      {/* <Button title={"Salvar"} handleClick={() => infoClient()} /> */}
+      <>Total = R${total},00</>
+      <Input value = {client} placeholder = "Nome"
+      onChange={e => setClient(e.currentTarget.value)} />
+      <Input type = 'number' value = {table} placeholder = "Mesa"
+      onChange={e => setTable(e.currentTarget.value)} />
 
-      {/* <Modal show={show} handleClick={() => setShow('false')} 
-      text="Preencha todos os campos" nameBtn="Fechar" /> */}
+      <Button title={"Salvar"} handleClick={() => infoClient()} />
 
       </div>     
            
            )
-}
-
-export default Restaurant;
+          }
+          
+          export default Restaurant; 

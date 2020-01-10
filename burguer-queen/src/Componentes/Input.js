@@ -3,8 +3,10 @@ import React from 'react';
 function Input(props) {
     return (
       <input placeholder={props.placeholder} 
-      title={props.title} 
-      type={props.type}/>
+      value={props.value} 
+      type={props.type}
+      onChange={props.onChange}
+      />
     )
   };
 
