@@ -4,21 +4,21 @@
     src: url('../Fonts/Digitalt.otf');
 }
 
+restaurant{
+    display: 'flex';
+    flex-direction: 'row';
+    justify-content: 'space-around';
+}
 button {
     font-family: fonte1;
     background-color: white;
     border-radius: 7px;
     border-color: black;
     margin: 10px;
-    padding: 2px 20px;
+    padding: 2px;
     align-items: center;
-}
-
-.enviar{
-}
-
-.menu{
-    align-items: center;
+    height: 30px;
+    width: 40%;
 }
 
 input{
@@ -32,13 +32,11 @@ h5{
     color: white;
     border-style: solid;
     border-color: red;
-    margin-top: 106%;
-    padding: 20px;
+    padding: 10px;
     padding-left: 60%;
     position: relative;
     background-color: red;
     border-block-end-style: outset;
-    display: flexbox;
 }
 
 h1{
@@ -49,12 +47,60 @@ h1{
 }
 
 section{
+    border-style: outset;
+}
+
+
+/* div{
+    font-family: fonte1;
+    font-size: 15x; */
+/* } */
+
+/* menucard{
+    width: 50%;
+} */
+
+.card{
     font-family: fonte1;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     border-style: outset;
-    margin-right: 500px;
-    position: relative;
+    width: 43%;
+}
+
+.pedidos{
+    font-family: fonte1;
+    text-align: center;
+    padding: 10px;
+    border-style: outset;
+    width: 150%;
+}
+
+.addDecItem {
+    /* width: 15%; */
+    margin-top: 25%;
+    justify-content: center;
+    display: flex;
+}
+
+.addDecItem1 {
+    width: 50%;
+}
+
+.itens{
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.adicionar{
+    width: 60%;
+}
+
+.resumo{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .pedidos{
@@ -63,10 +109,31 @@ section{
     position: right;
     justify-content: space-between;
 }
+.header{
+    height: 250px;
+    display: flex;
+    justify-content: center;
+}
 
-div{
-    font-family: fonte1;
-    font-size: 20px;
+.tabela{
+    display: flex;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+}
+
+.opções{
+   width: 50%;
+}
+
+.menu{
+    align-items: center;
+}
+
+.pedidos{
+    text-align: "center";
 }
 
 

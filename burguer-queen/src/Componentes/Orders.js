@@ -5,11 +5,17 @@ import MenuCard from '../Componentes/MenuCard'
         
         return (
         <div>
-            <MenuCard name = {props.name} price = {props.price} class = {props.class} />
+            <MenuCard name = {props.name} 
+            price = {props.price} 
+            class = {props.class} 
+            img = {props.img}
+            class = {props.class}
+            />
             <div>
                 {props.quantidade}
 
             </div>
+            
         </div>
         )}
 

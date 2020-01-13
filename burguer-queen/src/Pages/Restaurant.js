@@ -4,6 +4,7 @@
   import Button from '../Componentes/Button'
   import Input from '../Componentes/Input'
   import Orders from '../Componentes/Orders'
+  import Header from '../Componentes/Header'
   import '../Pages/Restaurant.css';
 
   const Restaurant = () => {
@@ -118,13 +119,18 @@
       return(
                       
        <div>
-
+         <Header />
+         
           <h1>O que vai ser?</h1>
-          <Button className = "menu" title={"Breakfast"} handleClick={() => filterFood('breakfast')}/>
-          <Button className = "menu" title={"All Day"} handleClick={() => filterFood('AllDay')} />
-              
+          <div className = {'tabela'}>
+          <section className = "opções"> 
+              <Button className = "menu" title={"Breakfast"} handleClick={() => filterFood('breakfast')}/>
+              <Button className = "menu" title={"All Day"} handleClick={() => filterFood('AllDay')} />
+          <div className = {'itens'}>
           {filteredMenu.map((menuItem, index) =>
-          <MenuCard key={index+menuItem.name} {...menuItem}   
+          
+          <MenuCard key={index+menuItem.name} class = {'card'}
+          img={menuItem.img}{...menuItem}   
           handleClick={() => verifyOptions(menuItem)}
           />
           )}
@@ -147,23 +153,35 @@
                 <label>{elem}</label>
                 </div>
               ))}
-            {<Button handleClick = {() => addOptionsExtras()} title = {"Adicionar"} />}
+            {<Button handleClick = {() => addOptionsExtras()} title = {"Adicionar"} className = {'adicionar'}/>}
             </div>
           ): false }
+          </div>
 
+
+          </section>
+          <section className= "pedido">
+                <h1>Pedido</h1> 
           {order.map((orderItem, index) => {
             return(
               <div key = {index}>
-                <h1>Pedido</h1>
-            <Orders class = {"pedidos"} key = {index}  
-            name = {orderItem.name} price = {orderItem.price} 
-            />
-            <Button title={"-"} handleClick = {() => decreaseItem(orderItem, -1)}/>
-            {orderItem.contador}
-            <Button title={"+"} handleClick = {() => addItem(orderItem, 1)}/>
+                <div className = {'itens'}>
+              
 
-            <Button title={"Excluir Item"} handleClick = {() => deleteItem()}/>
+            <Orders class= {"pedidos"} key = {index}  
+            name = {orderItem.name} price = {orderItem.price}
+            img = {orderItem.img} 
+            />
+            <div className = {'addDecItem'}>
+
+            <Button className={'addDecItem1'}title={"-"} handleClick = {() => decreaseItem(orderItem, -1)}/>
+            {orderItem.contador}
+            <Button className={'addDecItem1'}title={"+"} handleClick = {() => addItem(orderItem, 1)}/>
+
             </div>
+            <Button title={"Excluir Item"} handleClick = {() => deleteItem()}/>
+                  </div>
+                </div>
             )
           })}
           <Input value = {client} placeholder = "Cliente"
@@ -172,6 +190,8 @@
           onChange={e => setTable(e.currentTarget.value)} />
 
           <Button className= {"enviar"}title={"Enviar"} handleClick={() => infoClient()} />
+          </section>
+            </div>
           <h5>Total R$ {total},00</h5>
 
       </div>     

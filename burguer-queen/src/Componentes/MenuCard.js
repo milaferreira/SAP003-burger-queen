@@ -2,7 +2,12 @@ import React from 'react';
 
 function MenuCard(props){
     return (
-        <section onClick={props.handleClick}>
+        <section className={props.class}
+        onClick={props.handleClick}>
+             {/* <figure>                */}
+                <img 
+                src = {props.img}>
+                </img>
             <p>{props.name}</p>
             <p>{props.price}</p>
             <p></p>

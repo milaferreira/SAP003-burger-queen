@@ -1,0 +1,7 @@
+@media screen and (min-width: 700px){
+
+App.logo{
+    background-image: url('../Pics/logo.png');
+    background-repeat: no-repeat;
+}
+}
