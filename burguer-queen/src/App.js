@@ -7,10 +7,10 @@ import Restaurant from './Pages/Restaurant';
 
 function App() {
   return (
+
       <BrowserRouter className="App">
           
       <div>
-
           <Route path="/" exact component={Restaurant} />
 
       </div>

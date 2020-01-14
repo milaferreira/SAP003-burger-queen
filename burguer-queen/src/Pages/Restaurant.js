@@ -12,7 +12,7 @@
     const [menu, setMenu] = useState([]);
     const [client, setClient] = useState('');
     const [table, setTable] = useState('');
-    const [setShow] = useState(false);
+    const [show, setShow] = useState(false);
     const [order, setOrder] = useState([]);
     const [options, setOptions] = useState("")
     const [modal, setModal] = useState({status: false})
@@ -130,13 +130,13 @@
           {filteredMenu.map((menuItem, index) =>
           
           <MenuCard key={index+menuItem.name} class = {'card'}
-          img={menuItem.img}{...menuItem}   
+          img ={menuItem.img}{...menuItem}   
           handleClick={() => verifyOptions(menuItem)}
           />
           )}
 
           { modal.status ? (
-            <div>
+            <div className = {'extras'}>
               <h3>Extras</h3>
               {modal.item.extras.map((elem, index) => (
                 <div key = {index}>
@@ -189,7 +189,7 @@
           <Input type = 'number' value = {table} placeholder = "Mesa"
           onChange={e => setTable(e.currentTarget.value)} />
 
-          <Button className= {"enviar"}title={"Enviar"} handleClick={() => infoClient()} />
+          <Button className= {"enviar"}title={"Enviar"} handleClick={() => infoClient(show)} />
           </section>
             </div>
           <h5>Total R$ {total},00</h5>

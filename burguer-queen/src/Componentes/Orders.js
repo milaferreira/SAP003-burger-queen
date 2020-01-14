@@ -9,7 +9,7 @@ import MenuCard from '../Componentes/MenuCard'
             price = {props.price} 
             class = {props.class} 
             img = {props.img}
-            class = {props.class}
+            className = {'image'}
             />
             <div>
                 {props.quantidade}
