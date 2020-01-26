@@ -1,0 +1,11 @@
+@media screen and (min-width: 700px){
+@font-face {
+    font-family: fonte1;
+    src: url('../Fonts/Digitalt.otf');
+}
+
+.main-navegation{
+    display: grid;
+    justify-content: center;
+}
+}

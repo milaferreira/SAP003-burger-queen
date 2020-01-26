@@ -5,6 +5,7 @@
   import Input from '../Componentes/Input'
   import Orders from '../Componentes/Orders'
   import Header from '../Componentes/Header'
+  import Main from '../Pages/Main'  
   import '../Pages/Restaurant.css';
 
   const Restaurant = () => {
@@ -26,9 +27,7 @@
         snapshot.forEach((doc) => setMenu((current) => [...current, doc.data()]));
       });
     }, []);
-    
-    
-    
+        
     function saveOrder(menuItem){
       const index = order.findIndex(element => element.name === menuItem.name)
       if(index === -1) {
@@ -114,13 +113,12 @@
                   );
                 }
             }
-                    
-                    
+                                        
       return(
                       
        <div>
          <Header />
-         
+         <Main />
           <h1>O que vai ser?</h1>
           <div className = {'tabela'}>
           <section className = "opções"> 

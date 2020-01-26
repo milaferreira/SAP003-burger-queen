@@ -1,20 +1,25 @@
 import React from 'react';
 import {
-  BrowserRouter,
-  Route,
+  BrowserRouter as Router,
+  Switch,
+  Route
 } from "react-router-dom";
 import Restaurant from './Pages/Restaurant';
+import Kitchen from './Pages/Kitchen';
+import Main from './Pages/Main'
 
 function App() {
   return (
 
-      <BrowserRouter className="App">
+      <Router className="App">
           
-      <div>
-          <Route path="/" exact component={Restaurant} />
-
-      </div>
-      </BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Main}/>
+          <Route path="/restaurant" exact component={Restaurant} />
+          <Route exact path="/kitchen" component={Kitchen} />
+        </Switch>
+      
+      </Router>
   );  
 }
 
